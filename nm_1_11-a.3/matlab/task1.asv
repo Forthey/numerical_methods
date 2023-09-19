@@ -20,7 +20,7 @@ plot(e, iter, "black");
 
 legend('полином МПД','полином МПИ', 'транс МПД', 'транс МПИ');
 title("Зависимость числа итераций от точности");
-xlabel("e^-^i");
+xlabel("e^-^x");
 ylabel("число итераций");
 hold off
 
@@ -47,7 +47,7 @@ plot(e, log(abs(rootsComplexHpm - rootComplex)), "green");
 plot(e, log(abs(rootsComplexFpi - rootComplex)), "black");
 
 legend('полином МПД','полином МПИ', 'транс МПД', 'транс МПИ');
-title("Зависимость ln разности с истинным корнем от точности");
-xlabel("e^-^i");
-ylabel("ln(|x - x^*|)");
+title("Зависимость числа итераций от точности");
+xlabel("e^-^x");
+ylabel("число итераций");
 hold off

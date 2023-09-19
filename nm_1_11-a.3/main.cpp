@@ -41,9 +41,10 @@ void testFirstFunc()
   drawLine(60);
   std::cout << "POLYNOM HPM" << std::endl;
   drawLine(60);
-  const double a = 0.26, b = 1.85;
+  const double a = 0.26, b = 0.5;
   std::vector<double> es;
   std::vector<unsigned> iters;
+  std::vector<double> roots;
 
   for (int i = E_MIN; i <= E_MAX; i++) {
     const double epsilon = pow(10, -i);
@@ -51,6 +52,7 @@ void testFirstFunc()
     std::cout << epsilon << " " << result.root << " " << result.iterNumber << std::endl;
     es.push_back(epsilon);
     iters.push_back(result.iterNumber);
+    roots.push_back(result.root);
   }
   
   for (double &e : es)
@@ -65,8 +67,14 @@ void testFirstFunc()
   }
   std::cout << std::endl;
 
+  for (double& root : roots) {
+      std::cout << root << " ";
+  }
+  std::cout << std::endl;
+
   es.clear();
   iters.clear();
+  roots.clear();
   drawLine(60);
   std::cout << "POLYNOM FPI" << std::endl;
   drawLine(60);
@@ -76,6 +84,7 @@ void testFirstFunc()
     std::cout << epsilon << " " << result.root << " " << result.iterNumber << std::endl;
     es.push_back(epsilon);
     iters.push_back(result.iterNumber);
+    roots.push_back(result.root);
   }
 
 
@@ -88,6 +97,11 @@ void testFirstFunc()
   for (unsigned& iter : iters)
   {
     std::cout << iter << " ";
+  }
+  std::cout << std::endl;
+
+  for (double& root : roots) {
+      std::cout << root << " ";
   }
   std::cout << std::endl;
 }
@@ -103,6 +117,7 @@ void testSecondFunc()
   const double a = -6, b = -4;
   std::vector<double> es;
   std::vector<unsigned> iters;
+  std::vector<double> roots;
 
   for (int i = E_MIN; i <= E_MAX; i++) {
     const double epsilon = pow(10, -i);
@@ -110,6 +125,7 @@ void testSecondFunc()
     std::cout << epsilon << " " << result.root << " " << result.iterNumber << std::endl;
     es.push_back(epsilon);
     iters.push_back(result.iterNumber);
+    roots.push_back(result.root);
   }
 
   for (double& e : es)
@@ -124,8 +140,14 @@ void testSecondFunc()
   }
   std::cout << std::endl;
 
+  for (double& root : roots) {
+      std::cout << root << " ";
+  }
+  std::cout << std::endl;
+
   es.clear();
   iters.clear();
+  roots.clear();
   drawLine(60);
   std::cout << "COMPLEX FPI" << std::endl;
   drawLine(60);
@@ -135,6 +157,7 @@ void testSecondFunc()
     std::cout << epsilon << " " << result.root << " " << result.iterNumber << std::endl;
     es.push_back(epsilon);
     iters.push_back(result.iterNumber);
+    roots.push_back(result.root);
   }
 
   for (double& e : es)
@@ -148,6 +171,12 @@ void testSecondFunc()
     std::cout << iter << " ";
   }
   std::cout << std::endl;
+
+  for (double& root : roots) {
+      std::cout << root << " ";
+  }
+  std::cout << std::endl;
+
 }
 
 int main()

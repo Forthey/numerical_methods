@@ -19,7 +19,7 @@ Result findRoot(double(&f)(double), double a, double b, double epsilon) {
 
 Result findRootForPolynom(double(&f)(double), const double epsilon)
 {
-	const double a = 0.26, b = 1.85, M = 162.4, m = 5.93, q = (M - m) / (M + m), alpha = 2 / (m + M);
+	const double a = 0.26, b = 0.5, M = 15, m = 5.93, q = (M - m) / (M + m), alpha = 2 / (m + M);
 	double x1 = a, x2 = b;
 	unsigned iter = 0;
 

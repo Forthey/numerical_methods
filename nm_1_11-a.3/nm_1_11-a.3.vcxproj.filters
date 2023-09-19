@@ -15,16 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Z:\_numerical_methods\nm_1_11-a.3\task1.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Z:\_numerical_methods\nm_1_11-a.3\main.cpp">
+    <ClCompile Include="task1.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Z:\_numerical_methods\nm_1_11-a.3\task1.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="task1.hpp">
+      <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

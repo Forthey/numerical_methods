@@ -127,11 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Z:\_numerical_methods\nm_1_11-a.3\task1.cpp" />
-    <ClCompile Include="Z:\_numerical_methods\nm_1_11-a.3\main.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="task1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Z:\_numerical_methods\nm_1_11-a.3\task1.hpp" />
+    <ClInclude Include="task1.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Z:\_numerical_methods\nm_1_11-a.3\.gitignore" />
