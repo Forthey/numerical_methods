@@ -1,4 +1,4 @@
-#include "Task1.hpp"
+#include "task1.hpp"
 
 Result findRoot(double(&f)(double), double a, double b, double epsilon) {
 	if (a > b || epsilon < 0)

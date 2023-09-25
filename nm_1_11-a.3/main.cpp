@@ -1,7 +1,6 @@
-﻿// nm_1_11-a.3.cpp: определяет точку входа для приложения.
-//
-#include <cmath>
-#include <vector>
+﻿#include <vector>
+#include <iomanip>
+
 #include "task1.hpp"
 
 
@@ -30,8 +29,8 @@ void drawLine(unsigned length)
   std::cout << std::endl;
 }
 
-#define E_MIN 1
-#define E_MAX 10
+#define E_MIN 2
+#define E_MAX 15
 
 /**
  * \brief функция, считающая корень для полинома для различной точности и выводящая всё на экран 
@@ -55,6 +54,7 @@ void testFirstFunc()
     roots.push_back(result.root);
   }
   
+
   for (double &e : es)
   {
     std::cout << e << " ";
@@ -181,6 +181,9 @@ void testSecondFunc()
 
 int main()
 {
+  std::cout << std::fixed;
+  std::cout << std::setprecision(15);
+
   testFirstFunc();
   testSecondFunc();
 
