@@ -1,6 +1,9 @@
 # CMake files
 **/cmake_build
 
+# Visual Studio
+**/.vs
+
 # User-specific files
 *.rsuser
 *.suo
