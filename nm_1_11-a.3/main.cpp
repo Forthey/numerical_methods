@@ -179,6 +179,52 @@ void testSecondFunc()
 
 }
 
+
+double testFunc(const double x)
+{
+  return x * x - 5;
+}
+
+Result findRoot_t(double(&f)(double), double a, double b, double epsilon) {
+  if (a > b || epsilon < 0)
+    throw "wrong input";
+
+  unsigned iter = 0;
+  while (b - a > epsilon && iter < MAX_ITER_NUM) {
+    std::cout << "a = " << a << " b = " << b << " x = (a + b) / 2 = " << (a + b) / 2 << " dif = " << fabs(0.3065 - (a+b)/2) << std::endl;
+    const double c = (a + b) / 2;
+    if (f(a) * f(c) > 0)
+      a = c;
+    else
+      b = c;
+    iter++;
+  }
+
+  return Result(iter, (a + b) / 2);
+}
+
+Result findRootForPolynom_t(double(&f)(double), const double epsilon)
+{
+  const double a = 0.26, b = 0.5, M = 15, m = 5.93, q = (M - m) / (M + m), alpha = 2 / (m + M);
+  double x1 = a, x2 = b;
+  unsigned iter = 0;
+
+  while (fabs(q / (1 - q) * (x2 - x1)) > epsilon)
+  {
+    const double tmp = x1;
+    x1 = x2 - alpha * f(x2);
+    x2 = tmp;
+    std::cout << "x = " << x2 << " x* = " << x1 << " root = (x + x*) / 2 = " << (x2 + x1) / 2 << " dif = " << fabs(0.3065 - (x2 + x1) / 2) << std::endl;
+    iter++;
+  }
+  return Result(iter, (x1 + x2) / 2);
+}
+
+void simulateCalc() {
+  std::cout << "Simulating calc..." << std::endl;
+  findRoot_t(polyVar11, 0.26, 0.5, 0.001);
+  findRootForPolynom_t(polyVar11, 0.001);
+} 
 int main()
 {
   std::cout << std::fixed;
@@ -186,6 +232,7 @@ int main()
 
   testFirstFunc();
   testSecondFunc();
-
+  std::cout << std::setprecision(3);
+  simulateCalc();
 	return 0;
 }
