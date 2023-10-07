@@ -4,7 +4,7 @@ int main()
 {
 	Solution solution;
 
-	solution.readEquationsFromFile("matrices/matrices.matrs");
-	solution.displayMatrices();
+	solution.begin("matrices/matrices.matrs", "matrices/roots.matrs");
+	//solution.displayMatrices();
 	return 0;
 }

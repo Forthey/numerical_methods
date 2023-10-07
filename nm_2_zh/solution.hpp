@@ -9,10 +9,13 @@ class Solution {
 	std::vector<LinEquation> linEquations;
 	bool initialized = false;
 
-	size_t eMin, eMax;
-	size_t equationMatrixSize;
-	size_t equationsCount;
+	int eMin, eMax;
+	int equationMatrixSize;
+	int equationsCount;
+
+	void readEquationsFromFile(const std::string &filename);
 public:
-	void readEquationsFromFile(std::string filename);
+	void begin(const std::string& inFilename, const std::string& outFilename);
 	void displayMatrices();
+	void writeMatrices(const std::string& filename);
 };

@@ -1,6 +1,6 @@
 #include "solution.hpp"
 
-void Solution::readEquationsFromFile(std::string filename) {
+void Solution::readEquationsFromFile(const std::string& filename) {
 	std::ifstream file;
 	file.open(filename, std::ifstream::in);
 	if (!file.is_open()) {
@@ -10,25 +10,25 @@ void Solution::readEquationsFromFile(std::string filename) {
 
 	file >> equationMatrixSize >> eMin >> eMax;
 
-	equationsCount = eMax - eMin + 1;
+	equationsCount = abs(eMax - eMin) + 1;
 
-	std::vector<std::vector<double>> A;
-	std::vector<double> b;
+	std::vector<std::vector<long double>> A;
+	std::vector<long double> b;
 	A.resize(equationMatrixSize);
 	b.resize(equationMatrixSize);
 	for (auto& row : A) {
 		row.resize(equationMatrixSize);
 	}
-	double conditionalityNumber;
+	long double conditionalityNumber;
 
-	for (size_t matrIndex = 0; matrIndex < equationsCount; matrIndex++) {
+	for (int matrIndex = 0; matrIndex < equationsCount; matrIndex++) {
 		file >> conditionalityNumber;
-		for (size_t i = 0; i < equationMatrixSize; i++) {
-			for (size_t j = 0; j < equationMatrixSize; j++) {
+		for (int i = 0; i < equationMatrixSize; i++) {
+			for (int j = 0; j < equationMatrixSize; j++) {
 				file >> A[i][j];
 			}
 		}
-		for (size_t i = 0; i < equationMatrixSize; i++) {
+		for (int i = 0; i < equationMatrixSize; i++) {
 			file >> b[i];
 		}
 		linEquations.push_back(LinEquation(A, b, conditionalityNumber));
@@ -42,16 +42,43 @@ void Solution::displayMatrices() {
 		std::cout << "<Matrix is not initialized>" << std::endl;
 		return;
 	}
-	for (size_t matrIndex = 0; matrIndex < equationsCount; matrIndex++) {
+	for (int matrIndex = 0; matrIndex < equationsCount; matrIndex++) {
 		const LinEquation& linEquation = linEquations[matrIndex];
 
 		std::cout << matrIndex + 1 << ". Matrix conditionality number = " << linEquation.getConditionalityNumber() << std::endl;
-		for (size_t i = 0; i < equationMatrixSize; i++) {
+		for (int i = 0; i < equationMatrixSize; i++) {
 			std::cout << "{ ";
-			for (size_t j = 0; j < equationMatrixSize; j++) {
+			for (int j = 0; j < equationMatrixSize; j++) {
 				std::cout << std::setw(15) << linEquation.getA()[i][j] << " ";
 			}
 			std::cout << "}\t{ " << linEquation.getb()[i] << " }" << std::endl;
 		}
 	}
+}
+
+void Solution::writeMatrices(const std::string& filename) {
+	std::ofstream file;
+	file.open(filename, std::ofstream::out);
+	if (!file.is_open()) {
+		std::cout << "Cannot open the file " << filename << ": not exist" << std::endl;
+		return;
+	}
+
+	for (auto& linEquation : linEquations) {
+		std::vector<long double> x = linEquation.getx();
+		for (auto& row : x) {
+			file << std::setprecision(20) << row << " ";
+		}
+		file << "\n";
+	}
+}
+
+void Solution::begin(const std::string& inFilename, const std::string& outFilename) {
+	readEquationsFromFile(inFilename);
+
+	for (auto& linEquation : linEquations) {
+		linEquation.solve();
+	}
+
+	writeMatrices(outFilename);
 }

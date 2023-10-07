@@ -1,21 +1,27 @@
 #pragma once
 #include <vector>
+#include <stdexcept>
 
 // Ax = b
 class LinEquation {
-	std::vector<std::vector<double>> A;
-	std::vector<double> b;
-	double conditionalityNumber;
+	std::vector<std::vector<long double>> A;
+	std::vector<long double> b;
+	long double conditionalityNumber;
+	std::vector<long double> x;
 
-	std::vector<double> x;
+	std::vector<std::vector<long double>> L;
+	std::vector<long double> D;
+
+	void makeLDLt();
 public:
 	LinEquation() = default;
-	LinEquation(std::vector<std::vector<double>>& A, std::vector<double>& b, double conditionalityNumber);
+	LinEquation(std::vector<std::vector<long double>>& A, std::vector<long double>& b, long double conditionalityNumber);
 
-	const std::vector<std::vector<double>>& getA() const;
-	const std::vector<double>& getb() const;
-	const double getConditionalityNumber() const;
+	const std::vector<std::vector<long double>>& getA() const;
+	const std::vector<long double>& getb() const;
+	const std::vector<long double>& getx() const;
+	const long double getConditionalityNumber() const;
 
-	std::vector<double>& solve();
+	void solve();
 };
 
