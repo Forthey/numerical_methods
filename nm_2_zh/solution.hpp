@@ -7,15 +7,20 @@
 
 class Solution {
 	std::vector<LinEquation> linEquations;
+	const std::string inFilename;
+	const std::string outFilename;
 	bool initialized = false;
+	int eMin = 0, eMax = 0;
+	int equationsCount = 0;
 
-	int eMin, eMax;
-	int equationMatrixSize;
-	int equationsCount;
-
-	void readEquationsFromFile(const std::string &filename);
+	void readEquationsFromFile();
 	void displayMatrices();
-	void writeMatrices(const std::string& filename);
+	void writeMatrices();
+
+	void parseError(const std::string& error);
 public:
-	void begin(const std::string& inFilename, const std::string& outFilename);
+	explicit Solution(const std::string& inFilename, const std::string& outFilename);
+
+	void begin();
+	void end();
 };

@@ -1,12 +1,3 @@
-% Константы 
-MATRIX_SIZE = 10;
-E_MIN = 1;
-E_MAX = 15;
-
-file = fopen("../matrices/root.matr", "wt");
-for i = 1:10
-    fprintf(file, "%.15f ", log(i + 1) * i / 2 * sqrt(i) * sin(i));
-end
 
 % Считывание вектора Хауса для задания ортогональной матрицы
 fileHaus = fopen("../matrices/haus_vector.matr", "rt");
@@ -22,24 +13,22 @@ fclose(fileRoot);
 diag = eye(MATRIX_SIZE);
 ort = diag - 2 * hausVector * transpose(hausVector) / (norm(hausVector)^2);
 
-
-fileMatrices = fopen("../matrices/matrices.matrs", "wt");
-fprintf(fileMatrices, "%i %i\n", E_MIN, E_MAX);
-
 e = zeros(1, E_MAX - E_MIN + 1);
 for i = E_MIN:E_MAX
     e(i) = 10^i;
 end
 
+fileZero = fopen("../matrices/zero_matrices.matrs", "wt");
+fprintf(fileZero, "%i %i\n", E_MIN, E_MAX);
 for i = E_MIN:E_MAX
-    diag(1, 1) = (-1)^i * e(i);
-    A = ort * diag * transpose(ort);
+    diag(1, 1) = 0;
+    A = diag;
     b = A * x;
-    fprintf(fileMatrices, "%i ", MATRIX_SIZE);
-    fprintf(fileMatrices, "%.15f\n", norm(A) * norm(inv(A)));
-    fprintf(fileMatrices, "%.15f ", A);
-    fprintf(fileMatrices, "\n");
-    fprintf(fileMatrices, "%.15f ", b);
-    fprintf(fileMatrices, "\n");
+    fprintf(fileZero, "%i ", MATRIX_SIZE);
+    fprintf(fileZero, "%.15f\n", norm(A) * norm(inv(A)));
+    fprintf(fileZero, "%.15f ", A);
+    fprintf(fileZero, "\n");
+    fprintf(fileZero, "%.15f ", b);
+    fprintf(fileZero, "\n");
 end
-fclose(fileMatrices);
+fclose(fileZero);
