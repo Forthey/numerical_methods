@@ -14,8 +14,8 @@ class Solution {
 	int equationsCount;
 
 	void readEquationsFromFile(const std::string &filename);
-public:
-	void begin(const std::string& inFilename, const std::string& outFilename);
 	void displayMatrices();
 	void writeMatrices(const std::string& filename);
+public:
+	void begin(const std::string& inFilename, const std::string& outFilename);
 };

@@ -37,12 +37,15 @@ void LinEquation::makeLDLt() {
                 sum = sum - L[j][k] * D[k] * L[i][k];
             if (j == i)
             {
-                if (sum <= 0) 
-                    throw std::runtime_error("A is not positive definite");
                 D[j] = sum;
                 L[j][j] = 1;
             }
-            else L[i][j] = sum / D[j];
+            else if (D[j] == 0) {
+                throw std::runtime_error("A norm is zero");
+            }
+            else {
+                L[i][j] = sum / D[j];
+            }
         }
 }
 

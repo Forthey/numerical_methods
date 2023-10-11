@@ -74,11 +74,20 @@ void Solution::writeMatrices(const std::string& filename) {
 }
 
 void Solution::begin(const std::string& inFilename, const std::string& outFilename) {
-	readEquationsFromFile(inFilename);
+	try {
+		readEquationsFromFile(inFilename);
 
-	for (auto& linEquation : linEquations) {
-		linEquation.solve();
+		for (auto& linEquation : linEquations) {
+			linEquation.solve();
+		}
+
+		writeMatrices(outFilename);
 	}
-
-	writeMatrices(outFilename);
+	catch (std::exception& exception) {
+		const std::string what = exception.what();
+		if (what == "A norm is zero") {
+			std::cout << "Looks like some of A matrices have zero norm, exiting..." << std::endl;
+		}
+		return;
+	}
 }
