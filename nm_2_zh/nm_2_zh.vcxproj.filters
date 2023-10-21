@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Z:\_numerical_methods\nm_2_zh\main.cpp">
+    <ClCompile Include="source\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="solution.cpp">
+    <ClCompile Include="source\solution.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="lin_equation.cpp">
+    <ClCompile Include="source\lin_equation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="solution.hpp">
+    <ClInclude Include="source\solution.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="lin_equation.hpp">
+    <ClInclude Include="source\lin_equation.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

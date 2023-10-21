@@ -1,4 +1,3 @@
-
 % Считывание вектора Хауса для задания ортогональной матрицы
 fileHaus = fopen("../matrices/haus_vector.matr", "rt");
 hausVector = fscanf(fileHaus, "%f", [MATRIX_SIZE 1]);
