@@ -16,8 +16,8 @@ void Solution::readEquationsFromFile() {
 
 	equationsCount = abs(eMax - eMin) + 1;
 
-	std::vector<std::vector<long double>> A;
-	std::vector<long double> b;
+	Matrix A;
+	LinMatrix b;
 	long double conditionalityNumber;
 	int matrixSize;
 	for (int matrIndex = 0; matrIndex < equationsCount; matrIndex++) {
@@ -40,26 +40,6 @@ void Solution::readEquationsFromFile() {
 	initialized = true;
 }
 
-void Solution::displayMatrices() {
-	if (!initialized) {
-		std::cout << "<Matrix is not initialized>" << std::endl;
-		return;
-	}
-	for (int matrIndex = 0; matrIndex < equationsCount; matrIndex++) {
-		const LinEquation& linEquation = linEquations[matrIndex];
-		const int matrixSize = linEquation.getA().size();
-
-		std::cout << matrIndex + 1 << ". Matrix conditionality number = " << linEquation.getConditionalityNumber() << std::endl;
-		for (int i = 0; i < matrixSize; i++) {
-			std::cout << "{ ";
-			for (int j = 0; j < matrixSize; j++) {
-				std::cout << std::setw(15) << linEquation.getA()[i][j] << " ";
-			}
-			std::cout << "}\t{ " << linEquation.getb()[i] << " }" << std::endl;
-		}
-	}
-}
-
 void Solution::writeMatrices() {
 	std::ofstream file;
 	file.open(outFilename, std::ofstream::out);
@@ -69,7 +49,7 @@ void Solution::writeMatrices() {
 	}
 
 	for (auto& linEquation : linEquations) {
-		std::vector<long double> x = linEquation.getx();
+		LinMatrix x = linEquation.getx();
 		for (auto& row : x) {
 			file << std::setprecision(20) << row << " ";
 		}
@@ -110,4 +90,9 @@ void Solution::end()
 {
 	linEquations.clear();
 	initialized = false;
+}
+
+Solution::~Solution()
+{
+	end();
 }

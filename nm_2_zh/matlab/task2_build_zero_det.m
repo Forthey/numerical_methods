@@ -12,29 +12,42 @@ fclose(fileRoot);
 diag = eye(MATRIX_SIZE);
 ort = diag - 2 * hausVector * transpose(hausVector) / (norm(hausVector)^2);
 
-e = zeros(1, E_MAX - E_MIN + 1);
-for i = E_MIN:E_MAX
-    e(i) = 10^i;
-end
-
 fileZero = fopen("../matrices/zero_matrices.matrs", "wt");
-fprintf(fileZero, "%i %i\n", E_MIN, E_MAX);
-for i = E_MIN:E_MAX
-    diag(1, 1) = 10^i;
-    A = ort * diag * transpose(ort);
-    for j = 1:MATRIX_SIZE
-        A(2, j) = A(3, j);
-        A(j, 2) = A(j, 2);
-    end
-    b = A * x;
-    fprintf(fileZero, "%i ", MATRIX_SIZE);
-    % Так как norm(A) * norm(inv(A)) неопределен (обратная матрица к
-    % матрице с нулевым определителем не определена), будем записывать
-    % просто ноль
-    fprintf(fileZero, "%.15f\n", 0);
-    fprintf(fileZero, "%.15f ", A);
-    fprintf(fileZero, "\n");
-    fprintf(fileZero, "%.15f ", b);
-    fprintf(fileZero, "\n");
+fprintf(fileZero, "%i %i\n", 1, 2);
+
+diag(1, 1) = 10;
+A = ort * diag * transpose(ort);
+for j = 1:MATRIX_SIZE
+    A(2, j) = A(3, j);
+    A(j, 2) = A(j, 2);
 end
+A
+b = A * x;
+fprintf(fileZero, "%i ", MATRIX_SIZE);
+% Так как norm(A) * norm(inv(A)) неопределен (обратная матрица к
+% матрице с нулевым определителем не определена), будем записывать
+% просто ноль
+fprintf(fileZero, "%.15f\n", 0);
+fprintf(fileZero, "%.15f ", A);
+fprintf(fileZero, "\n");
+fprintf(fileZero, "%.15f ", b);
+fprintf(fileZero, "\n");
+
+B = 10 * A;
+b = A * x;
+
+fprintf(fileZero, "%i ", MATRIX_SIZE);
+fprintf(fileZero, "%.15f\n", 0);
+fprintf(fileZero, "%.15f ", B);
+fprintf(fileZero, "\n");
+fprintf(fileZero, "%.15f ", b);
+fprintf(fileZero, "\n");
 fclose(fileZero);
+
+fileRoots = fopen("../matrices/zero_roots.matrs", "rt");
+roots = fscanf(fileRoots, "%f", [MATRIX_SIZE 2]);
+fclose(fileRoots);
+factOshibka1 = norm(roots(:, 1) - x)
+nevyazka1 = norm(A * roots(:, 1) - b)
+factOshibka2 = norm(roots(:, 2) - x)
+nevyazka2 = norm(A * roots(:, 2) - b)

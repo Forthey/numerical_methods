@@ -1,39 +1,23 @@
 ﻿#include "lin_equation.hpp"
 
-LinEquation::LinEquation(std::vector<std::vector<long double>>& A, std::vector<long double>& b, long double conditionalityNumber) : A(A), b(b), conditionalityNumber(conditionalityNumber) {
+LinEquation::LinEquation(Matrix& A, LinMatrix& b, long double conditionalityNumber) : A(A), b(b), conditionalityNumber(conditionalityNumber) {
     x.resize(b.size());
 }
 
-const std::vector<std::vector<long double>>& LinEquation::getA() const {
+const Matrix& LinEquation::getA() const {
 	return A;
 }
 
-const std::vector<long double>& LinEquation::getb() const {
+const LinMatrix& LinEquation::getb() const {
 	return b;
 }
 
-const std::vector<long double>& LinEquation::getx() const {
+const LinMatrix& LinEquation::getx() const {
     return x;
 }
 
 const long double LinEquation::getConditionalityNumber() const {
 	return conditionalityNumber;
-}
-
-void LinEquation::displayMatrix(std::vector<std::vector<long double>> matrix)
-{
-    std::cout << "---- MATRIX ----" << std::endl;
-    for (auto& row : matrix) {
-        std::cout << "{";
-        for (auto& element : row) {
-            std::cout << std::setw(15) << element << " ";
-        }
-        std::cout << "}" << std::endl;
-    }
-}
-
-void LinEquation::displayMatrix(std::vector<long double> matrix)
-{
 }
 
 void LinEquation::makeLDLt() {
@@ -71,7 +55,7 @@ void LinEquation::solve()
     makeLDLt();
 
     int size = L.size();
-    std::vector<long double> c;
+    LinMatrix c;
     c.resize(size);
 
     // L * c = b
