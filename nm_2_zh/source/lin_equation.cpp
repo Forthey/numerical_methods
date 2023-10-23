@@ -20,6 +20,22 @@ const long double LinEquation::getConditionalityNumber() const {
 	return conditionalityNumber;
 }
 
+void LinEquation::displayMatrix(std::vector<std::vector<long double>> matrix)
+{
+    std::cout << "---- MATRIX ----" << std::endl;
+    for (auto& row : matrix) {
+        std::cout << "{";
+        for (auto& element : row) {
+            std::cout << std::setw(15) << element << " ";
+        }
+        std::cout << "}" << std::endl;
+    }
+}
+
+void LinEquation::displayMatrix(std::vector<long double> matrix)
+{
+}
+
 void LinEquation::makeLDLt() {
     const int size = A.size();
     D.resize(size);

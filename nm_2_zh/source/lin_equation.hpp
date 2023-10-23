@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <iomanip>
 #include <vector>
 #include <stdexcept>
 
@@ -21,6 +23,9 @@ public:
 	const std::vector<long double>& getb() const;
 	const std::vector<long double>& getx() const;
 	const long double getConditionalityNumber() const;
+
+	static void displayMatrix(std::vector<std::vector<long double>> matrix);
+	static void displayMatrix(std::vector<long double> matrix);
 
 	void solve();
 };

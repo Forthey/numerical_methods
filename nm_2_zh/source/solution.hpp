@@ -1,7 +1,5 @@
 #pragma once
-#include <iostream>
 #include <fstream>
-#include <iomanip>
 
 #include "lin_equation.hpp"
 
