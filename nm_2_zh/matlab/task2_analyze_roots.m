@@ -25,8 +25,10 @@ for i = E_MIN:E_MAX
 
     % Проверка выполнения неравенства
     db = 2 * (0.5 - rand(MATRIX_SIZE,1)) .* b;
-    condNum = norm(A) * norm(inv(A));
-    if ~(norm1(i) / norm(roots(:, i)) <= condNum * norm(db) * norm(b))
+    condNum = norm(A) * norm(inv(A))
+    norm1(i) / norm(roots(:, i))
+    norm(db) * norm(b)
+    if ~(norm1(i) / norm(roots(:, i)) <= condNum * norm(db) / norm(b))
         inequalityTrue = false;
     end
 end
