@@ -18,10 +18,11 @@ void Solution::readEquationsFromFile() {
 
 	Matrix A;
 	LinMatrix b;
-	long double conditionalityNumber;
 	int matrixSize;
+	long double eigenvalue1, eigenvaluen;
+	long double conditionalityNumber;
 	for (int matrIndex = 0; matrIndex < equationsCount; matrIndex++) {
-		file >> matrixSize >> conditionalityNumber;
+		file >> matrixSize >> eigenvalue1 >> eigenvaluen >> conditionalityNumber;
 
 		A.resize(matrixSize);
 		for (int i = 0; i < matrixSize; i++) {
@@ -34,7 +35,7 @@ void Solution::readEquationsFromFile() {
 		for (int i = 0; i < matrixSize; i++) {
 			file >> b[i];
 		}
-		linEquations.push_back(LinEquation(A, b, conditionalityNumber));
+		linEquations.push_back(LinEquation(A, b, eigenvalue1, eigenvaluen, conditionalityNumber));
 	}
 	file.close();
 	initialized = true;

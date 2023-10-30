@@ -8,12 +8,20 @@
 // Класс одного линейного уравнения
 typedef std::vector<std::vector<long double>> Matrix;
 typedef std::vector<long double> LinMatrix;
+
+LinMatrix operator*(Matrix A, LinMatrix x);
+LinMatrix operator+(LinMatrix A, LinMatrix B);
+
 class LinEquation {
 	// A * x = b
 	Matrix A;
 	LinMatrix b;
 	long double conditionalityNumber;
 	LinMatrix x;
+	size_t dim;
+	long double a;
+	Matrix C, C1, C2;
+	LinMatrix g;
 
 	/**
 	 * \brief ...
@@ -30,7 +38,7 @@ public:
 	 * \param b - свободный член
 	 * \param conditionalityNumber - число обуслвленности
 	 */
-	LinEquation(Matrix& A, LinMatrix& b, long double conditionalityNumber);
+	LinEquation(Matrix& A, LinMatrix& b, long double l1, long double ln, long double conditionalityNumber);
 
 	/**
 	* \brief Функция, возвращающая матрицу A
@@ -52,6 +60,8 @@ public:
 	* \return число обусловленности
 	*/
 	const long double getConditionalityNumber() const;
+
+	void buildIterator();
 
 	/**
 	* \brief Фукнция, считающая корень СЛАУ с помощью метода Зейделя
