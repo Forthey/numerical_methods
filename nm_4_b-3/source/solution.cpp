@@ -20,9 +20,8 @@ void Solution::readEquationsFromFile() {
 	LinMatrix b;
 	int matrixSize;
 	long double eigenvalue1, eigenvaluen;
-	long double conditionalityNumber;
 	for (int matrIndex = 0; matrIndex < equationsCount; matrIndex++) {
-		file >> matrixSize >> eigenvalue1 >> eigenvaluen >> conditionalityNumber;
+		file >> matrixSize >> eigenvalue1 >> eigenvaluen;
 
 		A.resize(matrixSize);
 		for (int i = 0; i < matrixSize; i++) {
@@ -35,7 +34,7 @@ void Solution::readEquationsFromFile() {
 		for (int i = 0; i < matrixSize; i++) {
 			file >> b[i];
 		}
-		linEquations.push_back(LinEquation(A, b, eigenvalue1, eigenvaluen, conditionalityNumber));
+		linEquations.push_back(LinEquation(A, b, eigenvalue1, eigenvaluen));
 	}
 	file.close();
 	initialized = true;
@@ -49,10 +48,23 @@ void Solution::writeMatrices() {
 		return;
 	}
 
-	for (auto& linEquation : linEquations) {
-		LinMatrix x = linEquation.getx();
-		for (auto& row : x) {
-			file << std::setprecision(20) << row << " ";
+	const long double fixedEpsilon = pow(10, -10);
+
+	for (size_t i = 0; i < equationsCount; i++) {
+		LinEquation linEquation = linEquations[i];
+		
+		if (i == 0) {
+			for (int j = 0; j < 12; j++) {
+				linEquation.solve(pow(10, -j));
+				LinMatrix x = linEquation.getx();
+				for (auto& row : x) {
+					file << std::setprecision(20) << row << " ";
+				}
+			}
+			std::cout << std::endl;
+		}
+		else {
+			linEquation.solve(fixedEpsilon);
 		}
 		file << "\n";
 	}
@@ -72,10 +84,6 @@ void Solution::begin() {
 		if (!initialized) {
 			std::cout << "Solution is not initialized, exiting..." << std::endl;
 			return;
-		}
-
-		for (auto& linEquation : linEquations) {
-			linEquation.solve();
 		}
 
 		writeMatrices();

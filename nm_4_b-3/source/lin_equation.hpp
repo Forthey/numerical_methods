@@ -11,22 +11,34 @@ typedef std::vector<long double> LinMatrix;
 
 LinMatrix operator*(Matrix A, LinMatrix x);
 LinMatrix operator+(LinMatrix A, LinMatrix B);
+LinMatrix operator-(LinMatrix A, LinMatrix B);
+LinMatrix operator/(LinMatrix A, long double a);
+long double norm(LinMatrix A);
 
 class LinEquation {
 	// A * x = b
 	Matrix A;
 	LinMatrix b;
-	long double conditionalityNumber;
 	LinMatrix x;
 	size_t dim;
+
+	// Для итераций
 	long double a;
-	Matrix C, C1, C2;
+	Matrix C;
 	LinMatrix g;
+
+	// Точность
+	long double epsilon;
 
 	/**
 	 * \brief ...
 	 */
 	LinMatrix doOneIteration(LinMatrix& x);
+
+	/**
+	 * \brief ...
+	 */
+	bool isConditionMet(LinMatrix& x1, LinMatrix& x0);
 public:
 	/**
 	 * \brief Конструктор по умолчанию
@@ -38,7 +50,7 @@ public:
 	 * \param b - свободный член
 	 * \param conditionalityNumber - число обуслвленности
 	 */
-	LinEquation(Matrix& A, LinMatrix& b, long double l1, long double ln, long double conditionalityNumber);
+	LinEquation(Matrix& A, LinMatrix& b, long double l1, long double ln);
 
 	/**
 	* \brief Функция, возвращающая матрицу A
@@ -66,6 +78,6 @@ public:
 	/**
 	* \brief Фукнция, считающая корень СЛАУ с помощью метода Зейделя
 	*/
-	void solve();
+	void solve(long double epsilon);
 };
 

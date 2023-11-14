@@ -5,6 +5,10 @@
 */
 int main()
 {
+	//Solution solution0("matrices/test.matrs", "matrices/testroot.matrs");
+	//solution0.begin();
+	//solution0.end();
+	
 	Solution solution1("matrices/matrices.matrs", "matrices/roots.matrs");
 	solution1.begin();
 	solution1.end();
