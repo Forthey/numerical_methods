@@ -9,6 +9,8 @@
 typedef std::vector<std::vector<long double>> Matrix;
 typedef std::vector<long double> LinMatrix;
 
+// Utility функции для произведения операций над матрицами
+
 LinMatrix operator*(Matrix A, LinMatrix x);
 LinMatrix operator+(LinMatrix A, LinMatrix B);
 LinMatrix operator-(LinMatrix A, LinMatrix B);
@@ -22,21 +24,24 @@ class LinEquation {
 	LinMatrix x;
 	size_t dim;
 
-	// Для итераций
+	// Коэффициент альфа в итерациях
 	long double a;
-	Matrix C;
-	LinMatrix g;
 
 	// Точность
 	long double epsilon;
 
 	/**
-	 * \brief ...
+	 * \brief Функция, считающая новое приближение на основе старого
+	 * \param x - старое приближение
+	 * \return новое приближение
 	 */
 	LinMatrix doOneIteration(LinMatrix& x);
 
 	/**
-	 * \brief ...
+	 * \brief функция, проверяющая, больше ли норма разности между приближениями, чем эпсилон
+	 * \param x1 - новое приближение
+	 * \param x0 - старое приближение
+	 * \return больше ли норма всё еще, чем эпсилон
 	 */
 	bool isConditionMet(LinMatrix& x1, LinMatrix& x0);
 public:
@@ -48,7 +53,8 @@ public:
 	 * \brief Конструктор класса
 	 * \param A - матрица системы
 	 * \param b - свободный член
-	 * \param conditionalityNumber - число обуслвленности
+	 * \param l1 - первое собственное число
+	 * \param ln - последнее собственное число
 	 */
 	LinEquation(Matrix& A, LinMatrix& b, long double l1, long double ln);
 
@@ -67,16 +73,10 @@ public:
 	* \return корень уравнения
 	*/
 	const LinMatrix& getx() const;
-	/**
-	* \brief Функция, возвращающая число обуцсловленности
-	* \return число обусловленности
-	*/
-	const long double getConditionalityNumber() const;
-
-	void buildIterator();
 
 	/**
 	* \brief Фукнция, считающая корень СЛАУ с помощью метода Зейделя
+	* \param epsilon - точность нахождения
 	*/
 	void solve(long double epsilon);
 };

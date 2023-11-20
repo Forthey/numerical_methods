@@ -51,21 +51,23 @@ void Solution::writeMatrices() {
 	const long double fixedEpsilon = pow(10, -10);
 
 	for (size_t i = 0; i < equationsCount; i++) {
-		LinEquation linEquation = linEquations[i];
-		
+		LinEquation &linEquation = linEquations[i];
 		if (i == 0) {
 			for (int j = 0; j < 12; j++) {
+				LinEquation tmp = linEquation;
+
 				linEquation.solve(pow(10, -j));
 				LinMatrix x = linEquation.getx();
 				for (auto& row : x) {
 					file << std::setprecision(20) << row << " ";
 				}
+				file << "\n";
+
+				linEquation = tmp;
 			}
 			std::cout << std::endl;
 		}
-		else {
-			linEquation.solve(fixedEpsilon);
-		}
+		linEquation.solve(fixedEpsilon);
 		file << "\n";
 	}
 }

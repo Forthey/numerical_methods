@@ -23,24 +23,34 @@ ort = diag - 2 * hausVector * transpose(hausVector) / (norm(hausVector)^2);
 fileMatrices = fopen("../matrices/matrices.matrs", "wt");
 fprintf(fileMatrices, "%i %i\n", 1, 9);
 
-left = 25;
-right = 40;
+left = 15;
+right = 20;
 for i = 1:MATRIX_SIZE
     diag(i, i) = left + (right - left) * (i - 1) / MATRIX_SIZE;
 end
 
 fileDet = fopen("../matrices/determinants.txt", "wt");
 
-for i = 1:(MATRIX_SIZE - 1)
+lambda1 = diag(1, 1);
+lambdan = diag(MATRIX_SIZE, MATRIX_SIZE);
+
+for i = 1:MATRIX_SIZE
+    if i ~= 1
+        diag(i - 1, i - 1) = diag(i - 1, i - 1) / 10;
+    end
+    
     A = ort * diag * transpose(ort);
     b = A * x;
+    
+    lambda1 = diag(1, 1);
+    lambdan = diag(MATRIX_SIZE, MATRIX_SIZE);
     for j = 1:(i - 1)
         A(j, j) = A(j, j) / 10;
     end
     fprintf(fileDet, "%.15f ", det(A));
 
     fprintf(fileMatrices, "%i ", MATRIX_SIZE);
-    fprintf(fileMatrices, "%.15f %.15f ", diag(1, 1), diag(MATRIX_SIZE, MATRIX_SIZE));
+    fprintf(fileMatrices, "%.15f %.15f ", lambda1, lambdan);
     fprintf(fileMatrices, "%.15f ", A);
     fprintf(fileMatrices, "\n");
     fprintf(fileMatrices, "%.15f ", b);

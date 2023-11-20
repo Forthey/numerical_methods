@@ -16,45 +16,27 @@ const LinMatrix& LinEquation::getx() const {
     return x;
 }
 
-void LinEquation::buildIterator()
-{
-	C.resize(dim);
-	g.resize(dim);
-
-	for (size_t i = 0; i < dim; i++) {
-		C[i].resize(dim);
-		for (size_t j = 0; j < dim; j++) {
-			if (i == j) {
-				C[i][i] = 0;
-			}
-			else {
-				C[i][j] = -A[i][j] / A[i][i];
-			}
-		}
-		g[i] = b[i] / A[i][i];
-	}
-}
-
 LinMatrix LinEquation::doOneIteration(LinMatrix& x)
 {
-	LinMatrix x1(x.size());
+	LinMatrix x1 = x;
 	for (size_t i = 0; i < dim; i++) {
-		x1[i] = g[i];
-
 		for (size_t j = 0; j < i; j++) {
-			x1[i] += C[i][j] * x1[j];
+			x1[i] += -a * A[i][j] * x1[j];
 		}
 
-		for (size_t j = i + 1; j < dim; j++) {
-			x1[i] += C[i][j] * x[j];
+		for (size_t j = i; j < dim; j++) {
+			x1[i] += -a * A[i][j] * x[j];
 		}
+
+		x1[i] += a * b[i];
 	}
 	return x1;
 }
 
 bool LinEquation::isConditionMet(LinMatrix& x1, LinMatrix& x0)
 {
-	return norm((x1 - x0) / a + A * x0 - b) > epsilon;
+	return norm(x1 - x0) > epsilon;
+	//return norm((x1 - x0) / a + A * x0 - b) > epsilon;
 }
 
 void print(LinMatrix A) {
@@ -76,8 +58,7 @@ void print(Matrix A) {
 void LinEquation::solve(long double epsilon)
 {
 	this->epsilon = epsilon;
-	buildIterator();
-	LinMatrix x1 = g, x0 = g, oldx0 = g;
+	LinMatrix x1 = b, x0 = b, oldx0 = b;
 
 	int iter = 0;
 	do {
