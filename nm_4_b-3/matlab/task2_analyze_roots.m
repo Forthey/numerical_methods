@@ -18,20 +18,25 @@ ort = diag - 2 * hausVector * transpose(hausVector) / (norm(hausVector)^2);
 % Вычисление норм
 norm1 = zeros(1, 12);
 norm2 = zeros(1, 12);
-
-
+e = zeros(1, 12);
 
 diag = eye(MATRIX_SIZE);
-left = 15;
-right = 20;
 for i = 1:MATRIX_SIZE
     diag(i, i) = left + (right - left) * (i - 1) / MATRIX_SIZE;
 end
 
+A = ort * diag * transpose(ort);
+% Уменьшаю "в целом" определитель матрицы
+for row = 1:MATRIX_SIZE
+    for col = 1:MATRIX_SIZE
+        A(row, col) = A(row, col) / umAll;
+    end
+end
+
+b = A * x;
+
 for i = 1:12
-    A = ort * diag * transpose(ort);
-    A(1, 1) = A(1, 1) / 10;
-    b = A * x;
+    e(i) = 10^(-i + 2);
     norm1(i) = norm(roots(:, i) - x);
     norm2(i) = norm(A * roots(:, i) - b);
 end
@@ -49,8 +54,8 @@ hold off
 
 figure
 fileDet = fopen("../matrices/determinants.txt", "rt");
-dets = fscanf(fileDet, "%f", [1 9]);
-iter = [14 3646 2284 1698 1521 1648 1713 5876 6609];
+dets = fscanf(fileDet, "%f", [1 MATRIX_SIZE - 1]);
+iter = [3561 4760 4796 5280 5400 5456 6107 6784 6830];
 semilogx(dets, iter);
 
 title("Зависимость числа итераций от определителя при точности 10^-^1^0");

@@ -59,7 +59,7 @@ void Solution::writeMatrices() {
 				linEquation.solve(pow(10, -j));
 				LinMatrix x = linEquation.getx();
 				for (auto& row : x) {
-					file << std::setprecision(20) << row << " ";
+					file << std::setprecision(15) << row << " ";
 				}
 				file << "\n";
 
