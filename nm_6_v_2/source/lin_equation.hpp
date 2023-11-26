@@ -15,7 +15,6 @@ LinMatrix operator*(Matrix A, LinMatrix x);
 LinMatrix operator+(LinMatrix A, LinMatrix B);
 LinMatrix operator-(LinMatrix A, LinMatrix B);
 LinMatrix operator/(LinMatrix A, long double a);
-void print(LinMatrix A);
 long double norm(LinMatrix A);
 
 class LinEquation {

@@ -68,7 +68,6 @@ void Solution::writeMatrices() {
 			std::cout << std::endl;
 		}
 		linEquation.solve(fixedEpsilon);
-		//print(linEquation.getx());
 		file << "\n";
 	}
 }

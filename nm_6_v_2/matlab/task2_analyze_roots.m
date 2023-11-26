@@ -29,7 +29,7 @@ A = (ort * diag * transpose(ort)) / umAll;
 b = A * x;
 
 for i = 1:12
-    e(i) = 10^(-i + 2);
+    e(i) = 10^(-i + 1);
     norm1(i) = norm(roots(:, i) - x);
     norm2(i) = norm(A * roots(:, i) - b);
 end
@@ -48,15 +48,10 @@ hold off
 figure
 fileDet = fopen("../matrices/determinants.txt", "rt");
 dets = fscanf(fileDet, "%f", [1 MATRIX_SIZE - 1]);
-iter = [513 498 487 492 497 532 552 553 558];
+iter = [206 229 229 245 246 247 243 312 313];
 semilogx(dets, iter);
 
 title("Зависимость числа итераций от определителя при точности 10^-^1^0");
 xlabel("|A|");
 ylabel("N");
-grid on
-
-figure
-iter2 = [6 12 30 51 72 93 114 135 156 177 198 219];
-loglog(e, iter2);
 grid on

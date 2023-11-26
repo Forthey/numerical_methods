@@ -41,7 +41,7 @@ bool LinEquation::isConditionMet(LinMatrix& x1, LinMatrix& x0)
 
 void print(LinMatrix A) {
 	for (auto& a : A) {
-		std::cout << std::setprecision(10) << a << std::endl;;
+		std::cout << a << " ";
 	}
 	std::cout << std::endl;
 }
@@ -49,7 +49,7 @@ void print(LinMatrix A) {
 void print(Matrix A) {
 	for (auto& row : A) {
 		for (auto& a : row) {
-			std::cout << std::setprecision(15) << a << " ";
+			std::cout << a << " ";
 		}
 		std::cout << std::endl;
 	}
