@@ -1,5 +1,19 @@
 ﻿#include "lin_equation.hpp"
 
+long double infNorm(Matrix& A) {
+	long double maxRowSum = 0;
+	for (auto& row : A) {
+		long double curRowSum = 0;
+		for (auto& el : row) {
+			curRowSum += abs(el);
+		}
+		if (curRowSum > maxRowSum) {
+			maxRowSum = curRowSum;
+		}
+	}
+	return maxRowSum;
+}
+
 LinEquation::LinEquation(Matrix& A, LinMatrix& b, long double l1, long double ln) : A(A), b(b), a(2.0/(l1+ln)), dim(b.size()), epsilon(0) {
     x.resize(b.size());
 }
@@ -36,7 +50,6 @@ LinMatrix LinEquation::doOneIteration(LinMatrix& x)
 bool LinEquation::isConditionMet(LinMatrix& x1, LinMatrix& x0)
 {
 	return norm(x1 - x0) > epsilon;
-	//return norm((x1 - x0) / a + A * x0 - b) > epsilon;
 }
 
 void print(LinMatrix A) {

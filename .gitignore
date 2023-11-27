@@ -3,6 +3,8 @@
 
 # Visual Studio
 **/.vs
+# CLion
+**/.idea
 
 # User-specific files
 *.rsuser

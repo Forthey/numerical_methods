@@ -19,41 +19,29 @@ fclose(fileRoot);
 diag = eye(MATRIX_SIZE);
 ort = diag - 2 * hausVector * transpose(hausVector) / (norm(hausVector)^2);
 
-
 fileMatrices = fopen("../matrices/matrices.matrs", "wt");
 fprintf(fileMatrices, "%i %i\n", 1, MATRIX_SIZE);
 
-left = 10;
-right = 20;
+left = 2;
+right = 10;
 for i = 1:MATRIX_SIZE
     diag(i, i) = left + (right - left) * (i - 1) / MATRIX_SIZE;
 end
 
 fileDet = fopen("../matrices/determinants.txt", "wt");
 
-lambda1 = diag(1, 1);
-lambdan = diag(MATRIX_SIZE, MATRIX_SIZE);
-
-umAll = 10;
-%A = (ort * diag * transpose(ort)) / umAll;
-umCur = 5;
-% Уменьшение определителя матрицы через уменьшение строк
+umAll = 4;
+umCur = 4;
+% Уменьшение определителя матрицы через уменьшение с.ч.
 for row = 1:MATRIX_SIZE
     if row ~= 1
         diag(row, row) = diag(row, row) / umCur;
-        %A(row - 1, row - 1) = A(row - 1, row - 1) / umCur;
-        %for col = 1:MATRIX_SIZE
-        %    A(row, col) = A(row, col) / umCur;
-        %end
-        %for col = 1:MATRIX_SIZE
-        %    A(col, row) = A(col, row) / umCur;
-        %end
     end
     A = (ort * diag * transpose(ort)) / umAll;
     b = A * x;
-    
-    cond(A)
-    
+    det(A)
+    lambda1 = diag(1, 1);
+    lambdan = diag(MATRIX_SIZE, MATRIX_SIZE);
     fprintf(fileDet, "%.15f ", det(A));
 
     fprintf(fileMatrices, "%i ", MATRIX_SIZE);

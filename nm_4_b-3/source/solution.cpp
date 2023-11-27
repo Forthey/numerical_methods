@@ -53,7 +53,7 @@ void Solution::writeMatrices() {
 	for (size_t i = 0; i < equationsCount; i++) {
 		LinEquation &linEquation = linEquations[i];
 		if (i == 0) {
-			for (int j = 0; j < 12; j++) {
+			for (int j = 1; j <= 12; j++) {
 				LinEquation tmp = linEquation;
 
 				linEquation.solve(pow(10, -j));
