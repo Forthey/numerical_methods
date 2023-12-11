@@ -1,34 +1,49 @@
 #pragma once
 #include <fstream>
-
-#include "lin_equation.hpp"
+#include <vector>
+#include <iostream>
+#include <iomanip>
 
 // Класс решения
+typedef std::vector<long double> Vector;
+typedef std::vector<Vector> Matrix;
 class Solution {
-	// Массив всех СЛАУ
-	std::vector<LinEquation> linEquations;
-	// Файл, в из которого сичтываются СЛАУ
+	// матрица
+	Matrix A;
+	std::vector<std::pair<long double, int>> minLyambdas;
+
+	// Файл, в из которого сичтывается матрицы
 	const std::string inFilename;
-	// Файл, в который записываются СЛАУ
+	// Файл, в который записывается матрицы
 	const std::string outFilename;
-
+	// Диапазон значений эпсилон (10^e_min;10^e_max)
+	long double e_min = 0, e_max = 0;
+	const long double minEpsilon = pow(10, -13);
 	bool initialized = false;
-	int eMin = 0, eMax = 0;
-	int equationsCount = 0;
 
 	/**
-	 * \brief Функция, сичтывающая матрицы из заданного файла
+	 * \brief Функция, считывающая матрицу из заданного файла
 	 */
-	void readEquationsFromFile();
+	void readMatrixFromFile();
 	/**
-	 * \brief Функция, записывающая матрицы в заданный файл
+	 * \brief Функция, записывающая минимальное с.ч. в заданный файл
 	 */
-	void writeMatrices();
+	void writeLyambdas();
+
 	/**
-	 * \brief Функция обработки ошибок
-	 * \param error - ошибка
+	 * \brief Функция, считающая максимальное с.ч. методом скалярных произведений
+	 * \param A - матрица, у которой надо посчитать с.ч.
+	 * \param normed - нужно ли нормировать векторы
+	 * \param epsilon - точность числа
 	 */
-	void parseError(const std::string& error);
+	std::pair<long double, int> findLyambda(const Matrix& A, bool normed, long double epsilon);
+	/**
+	 * \brief Функция, считающая минимальное с.ч. методом скалярных произведений
+	 */
+	std::pair<long double, int> findLyambdas(long double epsilon);
+
+	Vector normalize(const Vector& X);
+	long double len(const Vector& X);
 public:
 	/**
 	 * \brief Конструктор класса
@@ -38,7 +53,7 @@ public:
 	explicit Solution(const std::string& inFilename, const std::string& outFilename);
 
 	/**
-	 * \brief Функция, считающая корни у всех СЛАУ
+	 * \brief Функция, считающая с.ч. у матрицы
 	 */
 	void begin();
 
@@ -46,9 +61,4 @@ public:
 	 * \brief Функция, вызываемая при завершении вычислений
 	 */
 	void end();
-
-	/**
-	 * \brief Деструктор класса
-	 */
-	~Solution();
 };
