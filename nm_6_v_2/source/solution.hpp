@@ -7,17 +7,21 @@
 //  ласс решени€
 typedef std::vector<long double> Vector;
 typedef std::vector<Vector> Matrix;
+typedef std::pair<long double, int> LyambdaPair;
 class Solution {
 	// матрица
 	Matrix A;
-	std::vector<std::pair<long double, int>> minLyambdas;
+	// массив пар с.ч. - число итераций
+	std::vector<LyambdaPair> minLyambdas;
+	// массив собственных векторов
+	std::vector<Vector> vectors;
 
 	// ‘айл, в из которого сичтываетс€ матрицы
 	const std::string inFilename;
 	// ‘айл, в который записываетс€ матрицы
 	const std::string outFilename;
 	// ƒиапазон значений эпсилон (10^e_min;10^e_max)
-	long double e_min = 0, e_max = 0;
+	int e_min = 0, e_max = 0;
 	const long double minEpsilon = pow(10, -13);
 	bool initialized = false;
 
@@ -28,7 +32,7 @@ class Solution {
 	/**
 	 * \brief ‘ункци€, записывающа€ минимальное с.ч. в заданный файл
 	 */
-	void writeLyambdas();
+	void writeLyambdasAndVectors();
 
 	/**
 	 * \brief ‘ункци€, считающа€ максимальное с.ч. методом скал€рных произведений
@@ -36,9 +40,10 @@ class Solution {
 	 * \param normed - нужно ли нормировать векторы
 	 * \param epsilon - точность числа
 	 */
-	std::pair<long double, int> findLyambda(const Matrix& A, bool normed, long double epsilon);
+	std::pair<LyambdaPair, Vector> findLyambda(const Matrix& A, bool normed, long double epsilon);
 	/**
 	 * \brief ‘ункци€, считающа€ минимальное с.ч. методом скал€рных произведений
+	 * \param epsilon - точность числа
 	 */
 	std::pair<long double, int> findLyambdas(long double epsilon);
 

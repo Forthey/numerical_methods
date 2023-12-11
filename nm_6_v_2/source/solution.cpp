@@ -15,6 +15,13 @@ void print(const Matrix& A) {
 	std::cout << std::endl;
 }
 
+void print(const Vector& A) {
+	for (auto& el : A) {
+		std::cout << el << " ";
+	}
+	std::cout << std::endl;
+}
+
 long double operator*(const Vector& A, const Vector& B);
 Vector operator*(const Matrix& A, const Vector& B);
 Matrix operator*(long double k, const Matrix& A);
@@ -114,7 +121,7 @@ void Solution::readMatrixFromFile() {
 	initialized = true;
 }
 
-void Solution::writeLyambdas() {
+void Solution::writeLyambdasAndVectors() {
 	std::ofstream file;
 	file.open(outFilename, std::ofstream::out);
 	if (!file.is_open()) {
@@ -126,9 +133,17 @@ void Solution::writeLyambdas() {
 		file << std::setprecision(15) << minLyambdas[i].first << std::endl;
 		std::cout << minLyambdas[i].second << " ";
 	}
+	file.close();
+	file.open("matrices/vectors.matrs");
+	for (int i = vectors.size() - 1; i >= 0; i--) {
+		for (auto& el : vectors[i]) {
+			file << el << " ";
+		}
+	}
+	file.close();
 }
 
-std::pair<long double, int> Solution::findLyambda(const Matrix& A, bool normed, long double epsilon)
+std::pair<LyambdaPair, Vector> Solution::findLyambda(const Matrix& A, bool normed, long double epsilon)
 {
 	long double lyambda = 0, newLyambda = 0;
 	int iter = 0;
@@ -151,16 +166,18 @@ std::pair<long double, int> Solution::findLyambda(const Matrix& A, bool normed, 
 			iter++;
 		} while (abs(newLyambda - lyambda) > epsilon);
 	}
-	return { newLyambda, iter };
+	return { { newLyambda, iter }, normalize(X) };
 }
 
 std::pair<long double, int> Solution::findLyambdas(long double epsilon)
 {
 	std::pair<long double, int> answer1, answer2;
-
-	answer1 = findLyambda(A, true, epsilon);
+	std::pair<LyambdaPair, Vector> tmp;
+	answer1 = findLyambda(A, true, epsilon).first;
 	Matrix B = A - answer1.first * E(A.size());
-	answer2 = findLyambda(B, true, epsilon / A.size() / A.size());
+	tmp = findLyambda(B, true, epsilon / A.size() / A.size());
+	answer2 = tmp.first;
+	vectors.push_back(tmp.second);
 
 	return { answer1.first + answer2.first, answer1.second + answer2.second };
 }
@@ -196,7 +213,7 @@ void Solution::begin() {
 		int index = i - e_min;
 		minLyambdas.push_back(findLyambdas(pow(10, i)));
 	}
-	writeLyambdas();
+	writeLyambdasAndVectors();
 	end();
 }
 

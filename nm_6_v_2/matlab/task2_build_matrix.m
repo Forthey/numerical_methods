@@ -24,6 +24,9 @@ fileMatrices = fopen("../matrices/matrices.matrs", "wt");
 fprintf(fileMatrices, "%i %i\n", E_MIN, E_MAX);
 
 A = ort * diag * transpose(ort);
+
+[V,D] = eig(A);
+vector = V(:, 3);
 fprintf(fileMatrices, "%i ", MATRIX_SIZE);
 fprintf(fileMatrices, "%.15f ", A);
 fprintf(fileMatrices, "\n");
