@@ -17,8 +17,14 @@ diag = eye(MATRIX_SIZE);
 ort = diag - 2 * hausVector * transpose(hausVector) / (norm(hausVector)^2);
 % Создание диагональной матрицы и записывание собственных чисел в файл
 for i = 1:MATRIX_SIZE
-    diag(i, i) = log(i + 1) * i / 2 * sqrt(i) * abs(sin(i));
+    if i == 1
+        diag(i, i) = sqrt(abs(sin(i)));
+    else
+        diag(i, i) = 3 * sin(i) + 9;
+    end
+    fprintf(file, "%.15f ", diag(i, i));
 end
+
 A = ort * diag * transpose(ort);
 
 e = zeros(1, COUNT);
@@ -37,19 +43,23 @@ for i = 1:COUNT
     normNev(i) = norm(A * curV - lyambdas(i) * curV);
 end
 
+e1 = [e(1) e(2) e(3)];
+acc2 = [abs(0.298977205272969 - lyambda(1)) abs(0.294406181633526 - lyambda(1)) abs(0.292399003892378 - lyambda(1))];
+
+
 % Вывод норм на экран
 loglog(e, accuracyNum);
 hold on
 loglog(e, normVec);
 loglog(e, normNev);
-title("Зависимость разности с истинным с.ч. от точности");
+title("Зависимость разностей с истинным с.ч. от точности");
 legend("|l - l*|", "|x - x*|", "|Ax - lx|")
 xlabel("точность");
 ylabel("|l - l*|");
 grid on
 
 figure
-iter = [229 363 499 634 769 904 1039];
+iter = [2 3 5 6 8 10 11 13 15 16];
 semilogx(e, iter);
 title("Зависимость числа итераций от точности");
 xlabel("точность");

@@ -1,6 +1,6 @@
 % Константы 
 MATRIX_SIZE = 10;
-E_MIN = -4;
+E_MIN = -1;
 E_MAX = -10;
 COUNT = E_MIN - E_MAX + 1;
 
@@ -16,7 +16,11 @@ ort = diag - 2 * hausVector * transpose(hausVector) / (norm(hausVector)^2);
 % Создание диагональной матрицы и записывание собственных чисел в файл
 file = fopen("../matrices/lyambda.matr", "wt");
 for i = 1:MATRIX_SIZE
-    diag(i, i) = log(i + 1) * i / 2 * sqrt(i) * abs(sin(i));
+    if i == 1
+        diag(i, i) = sqrt(abs(sin(i)));
+    else
+        diag(i, i) = 3 * sin(i) + 9;
+    end
     fprintf(file, "%.15f ", diag(i, i));
 end
 
@@ -26,7 +30,7 @@ fprintf(fileMatrices, "%i %i\n", E_MIN, E_MAX);
 A = ort * diag * transpose(ort);
 
 [V,D] = eig(A);
-vector = V(:, 3);
+vector = V(:, 1);
 fprintf(fileMatrices, "%i ", MATRIX_SIZE);
 fprintf(fileMatrices, "%.15f ", A);
 fprintf(fileMatrices, "\n");

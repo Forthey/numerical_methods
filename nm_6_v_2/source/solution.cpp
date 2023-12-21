@@ -22,6 +22,21 @@ void print(const Vector& A) {
 	std::cout << std::endl;
 }
 
+// первая норма
+long double norm(const Matrix& A) {
+	long double result = 0;
+	for (auto& row : A) {
+		long double sum = 0;
+		for (auto& el : row) {
+			sum += abs(el);
+		}
+		if (sum > result) {
+			result = sum;
+		}
+	}
+	return result;
+}
+
 long double operator*(const Vector& A, const Vector& B);
 Vector operator*(const Matrix& A, const Vector& B);
 Matrix operator*(long double k, const Matrix& A);
@@ -155,14 +170,14 @@ std::pair<LyambdaPair, Vector> Solution::findLyambda(const Matrix& A, bool norme
 			X = A * Y;
 			newLyambda = X * Y;
 			iter++;
-		} while (abs(newLyambda - lyambda) > epsilon);
+		} while (std::abs(newLyambda - lyambda) > epsilon);
 	}
 	else {
 		do {
 			lyambda = newLyambda;
 			Vector Y = X;
 			X = A * Y;
-			newLyambda = X * X / (X * Y);
+			newLyambda = X * Y / (Y * Y);
 			iter++;
 		} while (abs(newLyambda - lyambda) > epsilon);
 	}
@@ -171,15 +186,16 @@ std::pair<LyambdaPair, Vector> Solution::findLyambda(const Matrix& A, bool norme
 
 std::pair<long double, int> Solution::findLyambdas(long double epsilon)
 {
-	std::pair<long double, int> answer1, answer2;
+	std::pair<long double, int> answer;
 	std::pair<LyambdaPair, Vector> tmp;
-	answer1 = findLyambda(A, true, epsilon).first;
-	Matrix B = A - answer1.first * E(A.size());
-	tmp = findLyambda(B, true, epsilon / A.size() / A.size());
-	answer2 = tmp.first;
+
+	long double k = norm(A);
+	Matrix B = A - k * E(A.size());
+	tmp = findLyambda(B, true, epsilon);
+	answer = tmp.first;
 	vectors.push_back(tmp.second);
 
-	return { answer1.first + answer2.first, answer1.second + answer2.second };
+	return { answer.first + k , answer.second };
 }
 
 Vector Solution::normalize(const Vector& X)
