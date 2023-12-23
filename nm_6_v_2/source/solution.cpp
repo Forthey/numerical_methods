@@ -156,6 +156,12 @@ void Solution::writeLyambdasAndVectors() {
 		}
 	}
 	file.close();
+
+    file.open("matrices/lyambdas_not_normed");
+    for (int i = notNormedMinLyambdas.size() - 1; i >= 0; i--) {
+        file << std::setprecision(15) << notNormedMinLyambdas[i] << std::endl;
+    }
+    file.close();
 }
 
 std::pair<LyambdaPair, Vector> Solution::findLyambda(const Matrix& A, bool normed, long double epsilon)
@@ -179,7 +185,7 @@ std::pair<LyambdaPair, Vector> Solution::findLyambda(const Matrix& A, bool norme
 			X = A * Y;
 			newLyambda = X * Y / (Y * Y);
 			iter++;
-		} while (abs(newLyambda - lyambda) > epsilon);
+		} while (std::abs(newLyambda - lyambda) > epsilon);
 	}
 	return { { newLyambda, iter }, normalize(X) };
 }
@@ -194,6 +200,8 @@ std::pair<long double, int> Solution::findLyambdas(long double epsilon)
 	tmp = findLyambda(B, true, epsilon);
 	answer = tmp.first;
 	vectors.push_back(tmp.second);
+    tmp = findLyambda(B, false, epsilon);
+    notNormedMinLyambdas.push_back(tmp.first.first + k);
 
 	return { answer.first + k , answer.second };
 }

@@ -1,12 +1,15 @@
 % Считывание чисел и векторов
 fileRoot = fopen("../matrices/lyambda.matr", "rt");
 fileRoots = fopen("../matrices/lyambda.txt", "rt");
+fileRoots2 = fopen("../matrices/lyambdas_not_normed", "rt");
 fileVectors = fopen("../matrices/vectors.matrs", "rt");
 lyambda = fscanf(fileRoot, "%f", [MATRIX_SIZE 1]);
 lyambdas = fscanf(fileRoots, "%f", [1 COUNT]);
+notNormedLyambdas = fscanf(fileRoots2, "%f", [1 COUNT]);
 vectors = fscanf(fileVectors, "%f", [MATRIX_SIZE COUNT]);
 fclose(fileRoot);
 fclose(fileRoots);
+fclose(fileRoots2);
 
 % Считывание вектора Хауса для задания ортогональной матрицы
 fileHaus = fopen("../matrices/haus_vector.matr", "rt");
@@ -29,12 +32,14 @@ A = ort * diag * transpose(ort);
 
 e = zeros(1, COUNT);
 accuracyNum = zeros(1, COUNT);
+accuracyNum2 = zeros(1, COUNT);
 normVec = zeros(1, COUNT);
 normNev = zeros(1, COUNT);
 
 for i = 1:COUNT 
     e(i) = 10^(E_MIN - i + 1);
     accuracyNum(i) = abs(lyambda(1) - lyambdas(i));
+    accuracyNum2(i) = abs(lyambda(1) - notNormedLyambdas(i));
     curV = vectors(:, i);
     if curV(1) > 0
         curV = -curV;
@@ -50,10 +55,11 @@ acc2 = [abs(0.298977205272969 - lyambda(1)) abs(0.294406181633526 - lyambda(1)) 
 % Вывод норм на экран
 loglog(e, accuracyNum);
 hold on
+loglog(e, accuracyNum2);
 loglog(e, normVec);
 loglog(e, normNev);
 title("Зависимость разностей с истинным с.ч. от точности");
-legend("|l - l*|", "|x - x*|", "|Ax - lx|")
+legend("|l - l*|", "|l - l*| (без норм)", "|x - x*|", "|Ax - lx|")
 xlabel("точность");
 ylabel("|l - l*|");
 grid on

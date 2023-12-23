@@ -16,6 +16,7 @@ class Solution {
 	std::vector<LyambdaPair> minLyambdas;
 	// массив собственных векторов
 	std::vector<Vector> vectors;
+    std::vector<long double> notNormedMinLyambdas;
 
 	// Файл, в из которого сичтывается матрицы
 	const std::string inFilename;
