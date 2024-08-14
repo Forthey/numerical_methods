@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package nm;
+
+service ComputeSpline {
+    rpc Evaluate(TabFuncs) returns (stream Spline);
+}
+
+// Messages for request
+message Point {
+    double x = 1;
+    double y = 2;
+}
+
+message TabFunc {
+    repeated Point points = 1;
+    int64 expand_to = 2;
+}
+
+message TabFuncs {
+    repeated TabFunc tab_funcs = 1;
+}
+
+// Messages for response
+message Spline {
+    repeated Point points = 1;
+    repeated Point base_points = 2;
+}

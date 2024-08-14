@@ -1,0 +1,4 @@
+matplotlib==3.8.3
+numpy==1.26.4
+PyQt6==6.6.1
+sympy==1.12

@@ -1,10 +1,16 @@
 # CMake files
-**/cmake_build
+cmake_build
+
+# Python
+venv
+__pycache__
 
 # Visual Studio
-**/.vs
+.vs
+.vscode
 # CLion
-**/.idea
+.idea
+cmake-build*
 
 # User-specific files
 *.rsuser
@@ -14,9 +20,9 @@
 *.sln.docstates
 
 # Build results
-**/*.exe
-**/*.pdb
-**/build
+*.exe
+*.pdb
+build
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -32,20 +38,3 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
-
-# Visual C++ cache files
-ipch/
-*.aps
-*.ncb
-*.opendb
-*.opensdf
-*.sdf
-*.cachefile
-*.VC.db
-*.VC.VC.opendb
-
-# Visual Studio cache files
-# files ending in .cache can be ignored
-*.[Cc]ache
-# but keep track of directories ending in .cache
-!?*.[Cc]ache

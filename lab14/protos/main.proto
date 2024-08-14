@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package nm;
+
+service EvaluateBoundary {
+    rpc EvaluateConst(stream RequirementsConst) returns (stream TabFunc);
+    rpc Evaluate(stream Requirements) returns (stream TabFuncWithH);
+}
+
+message Vector2 {
+    double y = 1;
+    double dy = 2;
+}
+
+// Request
+message Requirements {
+    double a = 1;
+    double b = 2;
+    Vector2 homo_cauchy = 3;
+    Vector2 cauchy = 4;
+    double epsilon = 5;
+}
+
+// Request
+message RequirementsConst {
+    double a = 1;
+    double b = 2;
+    Vector2 homo_cauchy = 3;
+    Vector2 cauchy = 4;
+    double h0 = 5;
+}
+
+message Point {
+    double x = 1;
+    double y = 2;
+}
+
+// Response
+message TabFunc {
+    repeated Point points = 1;
+}
+
+// Response
+message TabFuncWithH {
+    repeated Point points = 1;
+    repeated double h = 2;
+}

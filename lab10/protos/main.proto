@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package nm;
+
+service EvaluateIntegral {
+    rpc Evaluate(stream Requirements) returns (stream Integral);
+}
+
+// Request
+message Requirements {
+    double a = 2;
+    double b = 3;
+    double epsilon = 1;
+}
+
+// Response 
+message Integral {
+    double value = 1;
+    int64 iter_cnt = 2;
+    double h = 3;
+}
