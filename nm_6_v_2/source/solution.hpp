@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
 #include <vector>
+#include <cmath>
 #include <iostream>
 #include <iomanip>
 
@@ -15,6 +16,7 @@ class Solution {
 	std::vector<LyambdaPair> minLyambdas;
 	// массив собственных векторов
 	std::vector<Vector> vectors;
+    std::vector<long double> notNormedMinLyambdas;
 
 	// Файл, в из которого сичтывается матрицы
 	const std::string inFilename;
@@ -39,15 +41,27 @@ class Solution {
 	 * \param A - матрица, у которой надо посчитать с.ч.
 	 * \param normed - нужно ли нормировать векторы
 	 * \param epsilon - точность числа
+	 * \return пару чисел - собственное число и число итераций
 	 */
 	std::pair<LyambdaPair, Vector> findLyambda(const Matrix& A, bool normed, long double epsilon);
 	/**
 	 * \brief Функция, считающая минимальное с.ч. методом скалярных произведений
 	 * \param epsilon - точность числа
+	 * \return пару чисел - собственное число и число итераций
 	 */
 	std::pair<long double, int> findLyambdas(long double epsilon);
 
+	/**
+	 * \brief Функция, нормированный вектор
+	 * \param X - вектор
+	 * \return нормир. вектор
+	 */
 	Vector normalize(const Vector& X);
+	/**
+	* \brief Функция, считающая длину вектора
+	* \param X - вектора
+	* \return длина вектора
+	*/
 	long double len(const Vector& X);
 public:
 	/**
